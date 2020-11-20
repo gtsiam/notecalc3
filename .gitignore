@@ -1,2 +1,4 @@
 /target
-frontend-web/pkg
+
+/assets/frontend_web_bg.wasm
+/assets/frontend_web.js

@@ -1,0 +1,42 @@
+[config]
+skip_core_tasks = true
+default_to_workspace = false
+
+[tasks.default]
+alias = "run-dev"
+
+[tasks.run-dev]
+command = "serve"
+args = [ "." ]
+dependencies = [ "pack-dev", "prepare-assets" ]
+
+[tasks.run-release]
+command = "serve"
+args = [ "." ]
+dependencies = [ "pack-release", "prepare-assets" ]
+
+[tasks.pack-dev]
+command = "wasm-pack"
+args = [
+    "build",
+    "--dev",
+    "--target", "no-modules",
+    "frontend-web"
+]
+
+[tasks.pack-release]
+command = "wasm-pack"
+args = [
+    "build",
+    "--release",
+    "--no-typescript",
+    "--target", "no-modules",
+    "frontend-web"
+]
+
+[tasks.prepare-assets]
+script_runner = "@duckscript"
+script = '''
+cp ./frontend-web/pkg/frontend_web_bg.wasm assets/frontend_web_bg.wasm
+cp ./frontend-web/pkg/frontend_web.js assets/frontend_web.js
+'''
